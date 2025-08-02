@@ -1,0 +1,256 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.header > div:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+}
+
+.links {
+    display: flex;
+    gap: 30px;
+    color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.link {
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+
+.link:hover .categoryDropdown {
+    display: block;
+}
+
+.categoryDropdown {
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 0;
+    width: 100vw;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    padding-top: 2px;
+}
+
+.categoryDropdown::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+}
+
+.dropdownContent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dropdownSection h3 {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.dropdownSection ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdownSection li {
+    color: white;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+.dropdownSection li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+
+.search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid white;
+    padding: 10px 25px;
+    border-radius: 30px;
+} 
+
+.search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+}
+
+.search input::placeholder {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search i {
+    color: white;
+}
+
+.hamburgerMenu {
+    display: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.aside {
+    position: fixed;
+    background-color: #1a1a1a;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.asideOpen {
+    transform: translateX(0);
+}
+
+aside i {
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.aside i {
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.hamburgerLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 40px;
+    color: white;
+    font-size: 17px;
+    list-style: none;
+    padding: 0;
+}
+
+.hamburgerLink {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.hamburgerLink:hover {
+    color: #ccc;
+}
+
+@media (max-width: 1024px) {
+    .dropdownContent {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px 15px;
+    }
+    
+    .header > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .links {
+        display: none;
+    }
+    
+    .search {
+        display: flex;
+        width: 100%;
+        border: 2px solid white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        order: 2;
+    }
+    
+    .search input {
+        flex: 1;
+        font-size: 16px;
+    }
+    
+    .logo {
+        width: 100px;
+    }
+    
+    .hamburgerMenu {
+        display: block;
+    }
+    
+    .categoryDropdown {
+        display: none;
+    }
+}
