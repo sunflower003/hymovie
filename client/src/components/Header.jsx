@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/components/Header.module.css';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState(null);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,17 +31,32 @@ const Header = () => {
     setDropdownTimeout(timeout);
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    closeMenu();
+  };
+
   return (
     <header className={styles.header}>
         <div>
-          <img src="../src/assets/logo.png" alt="Hymovie Logo" className={styles.logo} />
+          <img 
+            src="../src/assets/logo.png" 
+            alt="Hymovie Logo" 
+            className={styles.logo} 
+            onClick={handleHomeClick}
+            style={{ cursor: 'pointer' }}
+          />
           <i className={`ri-menu-line ${styles.hamburgerMenu}`} onClick={toggleMenu}></i>
         </div>
         
         <ul className={styles.links}>
-            <li className={styles.link}>Home</li>
-            <li className={styles.link}>TV Shows</li>
-            <li className={styles.link}>Movies</li>
+            <li className={styles.link} onClick={handleHomeClick} style={{ cursor: 'pointer' }}>Home</li>
+            <li className={styles.link} onClick={() => handleNavigate('/tv-shows')} style={{ cursor: 'pointer' }}>TV Shows</li>
+            <li className={styles.link} onClick={() => handleNavigate('/movies')} style={{ cursor: 'pointer' }}>Movies</li>
             <li className={styles.link}>News</li>
             <li className={styles.link}>My list</li>
             <li 
@@ -120,9 +137,9 @@ const Header = () => {
         <aside className={`${styles.aside} ${isMenuOpen ? styles.asideOpen : ''}`}>
             <i className="ri-close-large-line" onClick={closeMenu}></i>
             <ul className={styles.hamburgerLinks}>
-                <li className={styles.hamburgerLink}>Home</li>
-                <li className={styles.hamburgerLink}>TV Shows</li>
-                <li className={styles.hamburgerLink}>Movies</li>
+                <li className={styles.hamburgerLink} onClick={handleHomeClick}>Home</li>
+                <li className={styles.hamburgerLink} onClick={() => handleNavigate('/tv-shows')}>TV Shows</li>
+                <li className={styles.hamburgerLink} onClick={() => handleNavigate('/movies')}>Movies</li>
                 <li className={styles.hamburgerLink}>News</li>
                 <li className={styles.hamburgerLink}>My list</li>
                 <li className={styles.hamburgerLink}>Collection</li>

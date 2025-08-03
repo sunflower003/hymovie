@@ -266,3 +266,12 @@
     gap: 12px;
   }
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: white;
+  font-size: 18px;
+}

@@ -1,0 +1,58 @@
+.footer {
+    color: white;
+    background-color: var(--primary);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 100px;
+}
+
+.logoFooter {
+    width: 150px;
+    cursor: pointer;
+}
+
+
+.rows {
+    display: flex;
+    gap: 200px;
+    align-items: flex-start;
+}
+
+.cols {
+    display: flex;
+    gap: 150px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 15px;
+}
+
+.footerText {
+    cursor: pointer;
+}
+
+.copyright {
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .rows {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .cols {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .col {
+        gap: 8px;
+    }
+}

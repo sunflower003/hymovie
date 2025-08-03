@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import styles from '../styles/components/HomeMovieList.module.css';
+import { getTrending, getLatestMovies, getLatestTVShows, getImageUrl } from '../services/tmdbApi';
 
 const HomeMovieList = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [latestMovies, setLatestMovies] = useState([]);
+  const [latestTVShows, setLatestTVShows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -19,79 +26,56 @@ const HomeMovieList = () => {
 
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  const movies = [
-    {
-      id: 1,
-      title: "Arcane",
-      year: "2025",
-      rating: "8.9",
-      poster: "https://m.media-amazon.com/images/M/MV5BODI0ZTljYTMtODQ1NC00NmI0LTk1YWUtN2FlNDM1MDExMDlhXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg"
-    },
-    {
-      id: 2,
-      title: "Money Heist",
-      year: "2018",
-      rating: "8.7",
-      poster: "https://m.media-amazon.com/images/M/MV5BODI0ZTljYTMtODQ1NC00NmI0LTk1YWUtN2FlNDM1MDExMDlhXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg"
-    },
-    {
-      id: 3,
-      title: "Stranger Things",
-      year: "2016",
-      rating: "8.8",
-      poster: "https://m.media-amazon.com/images/M/MV5BN2ZmYjg1YmItNWQ4OC00YWM0LWE0ZDktYThjOTZiZjhhN2Q2XkEyXkFqcGdeQXVyNjgxNTQ3Mjk@._V1_.jpg"
-    },
-    {
-      id: 4,
-      title: "Wednesday",
-      year: "2022",
-      rating: "8.1",
-      poster: "https://m.media-amazon.com/images/M/MV5BM2ZmMjEyZmYtOGM4YS00YTNhLWE3ZDMtNzQxM2RhNjBlODIyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg"
-    },
-    {
-      id: 5,
-      title: "The Witcher",
-      year: "2019",
-      rating: "8.2",
-      poster: "https://m.media-amazon.com/images/M/MV5BODI0ZTljYTMtODQ1NC00NmI0LTk1YWUtN2FlNDM1MDExMDlhXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg"
-    },
-    {
-      id: 6,
-      title: "Dark",
-      year: "2017",
-      rating: "8.8",
-      poster: "https://m.media-amazon.com/images/M/MV5BODI0ZTljYTMtODQ1NC00NmI0LTk1YWUtN2FlNDM1MDExMDlhXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg"
-    },
-    {
-      id: 7,
-      title: "Breaking Bad",
-      year: "2008",
-      rating: "9.5",
-      poster: "https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_.jpg"
-    },
-    {
-      id: 8,
-      title: "Squid Game",
-      year: "2021",
-      rating: "8.0",
-      poster: "https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTliNzYtMjc2YWMzMDEwMTA3XkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg"
-    },
-    {
-      id: 9,
-      title: "The Crown",
-      year: "2016",
-      rating: "8.7",
-      poster: "https://m.media-amazon.com/images/M/MV5BODI0ZTljYTMtODQ1NC00NmI0LTk1YWUtN2FlNDM1MDExMDlhXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg"
-    },
-    {
-      id: 10,
-      title: "Ozark",
-      year: "2017",
-      rating: "8.4",
-      poster: "https://m.media-amazon.com/images/M/MV5BODI0ZTljYTMtODQ1NC00NmI0LTk1YWUtN2FlNDM1MDExMDlhXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg"
-    }
-  ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [trending, latest, tvShows] = await Promise.all([
+          getTrending('all', 'week'),
+          getLatestMovies(),
+          getLatestTVShows()
+        ]);
+        
+        setTrendingMovies(trending.slice(0, 20));
+        setLatestMovies(latest.slice(0, 12));
+        setLatestTVShows(tvShows.slice(0, 12));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleMovieClick = (movie) => {
+    const mediaType = movie.media_type || (movie.first_air_date ? 'tv' : 'movie');
+    const id = movie.id;
+    const title = movie.title || movie.name;
+    
+    navigate(`/movie/${id}`, { 
+      state: { 
+        movieData: movie, 
+        mediaType: mediaType,
+        title: title
+      } 
+    });
+  };
+
+  const formatRating = (rating) => {
+    return rating ? rating.toFixed(1) : 'N/A';
+  };
+
+  const formatYear = (date) => {
+    if (!date) return 'N/A';
+    return new Date(date).getFullYear();
+  };
+
+  if (loading) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
   return (
     <div>
       <div className={styles.trending}>
@@ -100,10 +84,17 @@ const HomeMovieList = () => {
           {isMobile ? (
             // Mobile Grid Layout
             <div className={styles.mobileGrid}>
-              {movies.map((movie) => (
-                <div key={movie.id} className={styles.movieCard}>
+              {trendingMovies.map((movie) => (
+                <div key={movie.id} className={styles.movieCard} onClick={() => handleMovieClick(movie)}>
                   <div className={styles.posterContainer}>
-                    <img src={movie.poster} alt={movie.title} className={styles.moviePoster} />
+                    <img 
+                      src={movie.poster_url || getImageUrl(movie.poster_path)} 
+                      alt={movie.title || movie.name} 
+                      className={styles.moviePoster} 
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/300x450?text=No+Image';
+                      }}
+                    />
                     <div className={styles.playOverlay}>
                       <div className={styles.playButton}>
                         <i className="ri-play-fill"></i>
@@ -111,11 +102,11 @@ const HomeMovieList = () => {
                     </div>
                   </div>
                   <div className={styles.movieInfo}>
-                    <h2 className={styles.movieTitle}>{movie.title}</h2>
+                    <h2 className={styles.movieTitle}>{movie.title || movie.name}</h2>
                     <div className={styles.movieDetails}>
-                      <span className={styles.year}>{movie.year}</span>
+                      <span className={styles.year}>{formatYear(movie.release_date || movie.first_air_date)}</span>
                       <span className={styles.rating}>
-                        <i className="ri-star-fill"></i>{movie.rating}
+                        <i className="ri-star-fill"></i>{formatRating(movie.vote_average)}
                       </span>
                     </div>
                   </div>
@@ -134,7 +125,7 @@ const HomeMovieList = () => {
                   prevEl: `.${styles.swiperButtonPrev}`,
                 }}
                 autoplay={{
-                  delay: 5000,
+                  delay: 3000,
                   disableOnInteraction: false,
                   pauseOnMouseEnter: true,
                 }}
@@ -155,11 +146,18 @@ const HomeMovieList = () => {
                 }}
                 className={styles.swiper}
               >
-                {movies.map((movie) => (
+                {trendingMovies.map((movie) => (
                   <SwiperSlide key={movie.id}>
-                    <div className={styles.movieCard}>
+                    <div className={styles.movieCard} onClick={() => handleMovieClick(movie)}>
                       <div className={styles.posterContainer}>
-                        <img src={movie.poster} alt={movie.title} className={styles.moviePoster} />
+                        <img 
+                          src={movie.poster_url || getImageUrl(movie.poster_path)} 
+                          alt={movie.title || movie.name} 
+                          className={styles.moviePoster} 
+                          onError={(e) => {
+                            e.target.src = 'https://via.placeholder.com/300x450?text=No+Image';
+                          }}
+                        />
                         <div className={styles.playOverlay}>
                           <div className={styles.playButton}>
                             <i className="ri-play-fill"></i>
@@ -167,11 +165,11 @@ const HomeMovieList = () => {
                         </div>
                       </div>
                       <div className={styles.movieInfo}>
-                        <h2 className={styles.movieTitle}>{movie.title}</h2>
+                        <h2 className={styles.movieTitle}>{movie.title || movie.name}</h2>
                         <div className={styles.movieDetails}>
-                          <span className={styles.year}>{movie.year}</span>
+                          <span className={styles.year}>{formatYear(movie.release_date || movie.first_air_date)}</span>
                           <span className={styles.rating}>
-                            <i className="ri-star-fill"></i>{movie.rating}
+                            <i className="ri-star-fill"></i>{formatRating(movie.vote_average)}
                           </span>
                         </div>
                       </div>
@@ -197,10 +195,17 @@ const HomeMovieList = () => {
           <span className={styles.seeMore}>See More<i className="ri-arrow-right-line"></i></span>
         </div>
         <div className={styles.latestGrid}>
-          {movies.concat(movies.slice(0, 2)).map((movie, index) => (
-            <div key={`latest-${movie.id}-${index}`} className={styles.movieCard}>
+          {latestMovies.map((movie) => (
+            <div key={`latest-${movie.id}`} className={styles.movieCard} onClick={() => handleMovieClick(movie)}>
               <div className={styles.posterContainer}>
-                <img src={movie.poster} alt={movie.title} className={styles.moviePoster} />
+                <img 
+                  src={movie.poster_url || getImageUrl(movie.poster_path)} 
+                  alt={movie.title} 
+                  className={styles.moviePoster} 
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/300x450?text=No+Image';
+                  }}
+                />
                 <div className={styles.playOverlay}>
                   <div className={styles.playButton}>
                     <i className="ri-play-fill"></i>
@@ -210,9 +215,9 @@ const HomeMovieList = () => {
               <div className={styles.movieInfo}>
                 <h2 className={styles.movieTitle}>{movie.title}</h2>
                 <div className={styles.movieDetails}>
-                  <span className={styles.year}>{movie.year}</span>
+                  <span className={styles.year}>{formatYear(movie.release_date)}</span>
                   <span className={styles.rating}>
-                    <i className="ri-star-fill"></i>{movie.rating}
+                    <i className="ri-star-fill"></i>{formatRating(movie.vote_average)}
                   </span>
                 </div>
               </div>
@@ -226,10 +231,17 @@ const HomeMovieList = () => {
           <span className={styles.seeMore}>See More<i className="ri-arrow-right-line"></i></span>
         </div>
         <div className={styles.latestGrid}>
-          {movies.concat(movies.slice(0, 2)).map((movie, index) => (
-            <div key={`tvshows-${movie.id}-${index}`} className={styles.movieCard}>
+          {latestTVShows.map((show) => (
+            <div key={`tvshows-${show.id}`} className={styles.movieCard} onClick={() => handleMovieClick(show)}>
               <div className={styles.posterContainer}>
-                <img src={movie.poster} alt={movie.title} className={styles.moviePoster} />
+                <img 
+                  src={show.poster_url || getImageUrl(show.poster_path)} 
+                  alt={show.name} 
+                  className={styles.moviePoster} 
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/300x450?text=No+Image';
+                  }}
+                />
                 <div className={styles.playOverlay}>
                   <div className={styles.playButton}>
                     <i className="ri-play-fill"></i>
@@ -237,11 +249,11 @@ const HomeMovieList = () => {
                 </div>
               </div>
               <div className={styles.movieInfo}>
-                <h2 className={styles.movieTitle}>{movie.title}</h2>
+                <h2 className={styles.movieTitle}>{show.name}</h2>
                 <div className={styles.movieDetails}>
-                  <span className={styles.year}>{movie.year}</span>
+                  <span className={styles.year}>{formatYear(show.first_air_date)}</span>
                   <span className={styles.rating}>
-                    <i className="ri-star-fill"></i>{movie.rating}
+                    <i className="ri-star-fill"></i>{formatRating(show.vote_average)}
                   </span>
                 </div>
               </div>
