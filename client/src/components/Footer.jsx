@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.rows}>
-        <img src="../src/assets/logo.png" alt="Logo" className={styles.logoFooter}/>
+        <img src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-07-24/consent/87b6a5c0-0104-4e96-a291-092c11350111/019808e2-d1e7-7c0f-ad43-c485b7d9a221/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png" alt="Logo" className={styles.logoFooter}/>
         <div className={styles.cols}>
             <div className={styles.col}>
                 <p className={styles.footerText}>Account</p>

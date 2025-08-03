@@ -1,20 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from '../styles/pages/MovieDetail.module.css';
+import { generateFallbackUrls } from '../utils/videoUtils';
 
-const VideoPlayer = ({ src, title, movieId, mediaType = 'movie' }) => {
+const VideoPlayer = ({ src, title, movieId, mediaType = 'movie', season = 1, episode = 1 }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(src);
   const [retryCount, setRetryCount] = useState(0);
   const iframeRef = useRef(null);
 
-  // Fallback URLs with better error handling
-  const fallbackSources = [
-    `https://vidsrc.to/embed/${mediaType}/${movieId}`,
-    `https://vidsrc.xyz/embed/${mediaType}?tmdb=${movieId}`,
-    `https://vidsrc.cc/v2/embed/${mediaType}/${movieId}`,
-    `https://embed.su/embed/${mediaType}/${movieId}`
-  ];
+  // Generate fallback URLs using utility function
+  const fallbackSources = generateFallbackUrls(movieId, mediaType, season, episode);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -92,14 +88,21 @@ const VideoPlayer = ({ src, title, movieId, mediaType = 'movie' }) => {
       iframe.removeEventListener('error', handleError);
       clearTimeout(loadTimeout);
     };
-  }, [currentSrc, retryCount, fallbackSources]);
+  }, [currentSrc, retryCount, mediaType, movieId, season, episode]);
+
+  // Initialize with first fallback source if no src provided
+  useEffect(() => {
+    if (!src && fallbackSources.length > 0) {
+      setCurrentSrc(fallbackSources[0]);
+    }
+  }, [src, fallbackSources]);
 
   if (error) {
     return (
       <div className={styles.videoError}>
         <div className={styles.errorContent}>
           <h3>Video Player Error</h3>
-          <p>Unable to load the video from available sources.</p>
+          <p>Unable to load the {mediaType === 'tv' ? `TV show (S${season}E${episode})` : 'movie'} from available sources.</p>
           <p>Tried {retryCount + 1} of {fallbackSources.length} sources.</p>
           <button 
             onClick={() => {

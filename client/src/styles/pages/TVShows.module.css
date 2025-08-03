@@ -1,8 +1,248 @@
 .tvshows {
-  padding: 2rem;
+  padding: 25px;
+  margin-top: 100px;
+  background-color: var(--primary);
+  min-height: 100vh;
 }
 
-.tvshows h1 {
-  color: #333;
-  margin-bottom: 1rem;
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: white;
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  background: transparent;
+  border: 1px solid #444;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab.active {
+  background: #e50914;
+  border-color: #e50914;
+}
+
+.content h2 {
+  color: white;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.showsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.showCard {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.showCard:hover {
+  transform: scale(1.05);
+}
+
+.posterContainer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.poster {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.showCard:hover .overlay {
+  opacity: 1;
+}
+
+.playButton {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.playButton:hover {
+  background: white;
+}
+
+.showInfo {
+  margin-top: 10px;
+}
+
+.showTitle {
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.year {
+  color: #999;
+}
+
+.rating {
+  color: #ffd700;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: white;
+  font-size: 18px;
+}
+
+.noContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #ccc;
+  font-size: 16px;
+}
+
+.noContent p {
+  margin: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .tvshows {
+    padding: 20px 15px;
+    margin-top: 80px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tab {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .content h2 {
+    font-size: 20px;
+  }
+
+  .showsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .showTitle {
+    font-size: 14px;
+  }
+
+  .showMeta {
+    font-size: 12px;
+  }
+
+  .playButton {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tvshows {
+    padding: 15px 10px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .content h2 {
+    font-size: 18px;
+  }
+
+  .showsGrid {
+    gap: 12px;
+  }
+
+  .showTitle {
+    font-size: 13px;
+  }
+
+  .showMeta {
+    font-size: 11px;
+  }
+
+  .playButton {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
 }

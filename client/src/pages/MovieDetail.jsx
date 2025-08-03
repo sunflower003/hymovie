@@ -4,6 +4,7 @@ import styles from '../styles/pages/MovieDetail.module.css';
 import { getMovieDetails, getTVShowDetails, getImageUrl } from '../services/tmdbApi';
 import ErrorBoundary from '../components/ErrorBoundary';
 import VideoPlayer from '../components/VideoPlayer';
+import { getVideoEmbedUrl } from '../utils/videoUtils';
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -11,6 +12,8 @@ const MovieDetail = () => {
   const [movieData, setMovieData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedSeason, setSelectedSeason] = useState(1);
+  const [selectedEpisode, setSelectedEpisode] = useState(1);
 
   // Get data from state (passed from navigation) or default to movie type
   const { movieData: passedData, mediaType, title } = location.state || {};
@@ -111,10 +114,18 @@ const MovieDetail = () => {
         </p>
         <ErrorBoundary>
           <VideoPlayer 
-            src={movieData.vidsrc_url || `https://vidsrc.to/embed/${currentMediaType}/${movieData.id}`}
+            src={movieData?.vidsrc_url || getVideoEmbedUrl({
+              tmdbId: movieData?.id,
+              mediaType: currentMediaType,
+              season: selectedSeason,
+              episode: selectedEpisode,
+              options: { autoplay: true, autonext: currentMediaType === 'tv' }
+            })}
             title={movieTitle}
-            movieId={movieData.id}
+            movieId={movieData?.id}
             mediaType={currentMediaType}
+            season={selectedSeason}
+            episode={selectedEpisode}
           />
         </ErrorBoundary>
         <div className={styles.movieInfo}>

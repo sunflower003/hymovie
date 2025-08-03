@@ -54,6 +54,60 @@ const getLatestTVShows = async (req, res) => {
   }
 };
 
+// Get airing today TV shows
+const getAiringTodayTVShows = async (req, res) => {
+  try {
+    const { page = 1 } = req.query;
+    const tvShows = await tmdbService.getAiringTodayTVShows(page);
+    
+    // Add image URLs to each TV show
+    const tvShowsWithImages = tvShows.map(show => ({
+      ...show,
+      poster_url: tmdbService.getImageUrl(show.poster_path),
+      backdrop_url: tmdbService.getBackdropUrl(show.backdrop_path),
+      vidsrc_url: tmdbService.getVidsrcUrl(show.id, 'tv')
+    }));
+
+    res.json({
+      success: true,
+      data: tvShowsWithImages
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching airing today TV shows',
+      error: error.message
+    });
+  }
+};
+
+// Get top rated TV shows
+const getTopRatedTVShows = async (req, res) => {
+  try {
+    const { page = 1 } = req.query;
+    const tvShows = await tmdbService.getTopRatedTVShows(page);
+    
+    // Add image URLs to each TV show
+    const tvShowsWithImages = tvShows.map(show => ({
+      ...show,
+      poster_url: tmdbService.getImageUrl(show.poster_path),
+      backdrop_url: tmdbService.getBackdropUrl(show.backdrop_path),
+      vidsrc_url: tmdbService.getVidsrcUrl(show.id, 'tv')
+    }));
+
+    res.json({
+      success: true,
+      data: tvShowsWithImages
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching top rated TV shows',
+      error: error.message
+    });
+  }
+};
+
 // Get TV show details
 const getTVShowDetails = async (req, res) => {
   try {
@@ -91,5 +145,7 @@ const getTVShowDetails = async (req, res) => {
 module.exports = {
   getPopularTVShows,
   getLatestTVShows,
+  getAiringTodayTVShows,
+  getTopRatedTVShows,
   getTVShowDetails
 };
