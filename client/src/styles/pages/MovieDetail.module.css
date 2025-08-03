@@ -12,7 +12,7 @@
 
 .movieIframe {
   margin-top: 20px;
-  width: 70%;
+  width: 80%;
   aspect-ratio: 16/9;
   border: none;
   margin-inline: auto;
@@ -154,7 +154,7 @@
 }
 
 .videoError {
-  width: 70%;
+  width: 80%;
   aspect-ratio: 16/9;
   margin: 20px auto;
   display: flex;
