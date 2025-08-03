@@ -5,6 +5,23 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config();
 
+// Validate required environment variables
+const requiredEnvVars = [
+  'TMDB_ACCESS_TOKEN',
+  'TMDB_BASE_URL'
+];
+
+const missingVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+if (missingVars.length > 0) {
+  console.error('❌ Missing required environment variables:', missingVars);
+  console.log('ℹ️  Please check your environment configuration');
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  }
+} else {
+  console.log('✅ All required environment variables are set');
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
