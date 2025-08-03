@@ -132,13 +132,15 @@ export const getTVShowDetails = async (tvId) => {
 // Search movies and TV shows
 export const searchMulti = async (query, page = 1) => {
   try {
+    console.log('Searching for:', query, 'page:', page); // Debug log
     const response = await api.get('/search', {
       params: { query, page }
     });
-    return response.data.data;
+    console.log('Search response:', response.data); // Debug log
+    return response.data;
   } catch (error) {
     console.error('Error searching:', error);
-    return [];
+    return { results: [], total_pages: 0 };
   }
 };
 

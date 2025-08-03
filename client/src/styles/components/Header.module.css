@@ -264,6 +264,7 @@ aside i {
     .header {
         padding: 12px 8px;
         gap: 10px;
+        background-color: black;
     }
     
     .search {
@@ -271,7 +272,7 @@ aside i {
     }
     
     .logo {
-        width: 80px;
+        width: 120px;
     }
     
     .search input {

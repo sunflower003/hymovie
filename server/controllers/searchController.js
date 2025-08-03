@@ -12,10 +12,10 @@ const searchMulti = async (req, res) => {
       });
     }
 
-    const results = await tmdbService.searchMulti(query, page);
+    const searchResponse = await tmdbService.searchMulti(query, page);
     
     // Add image URLs to each result
-    const resultsWithImages = results.map(item => ({
+    const resultsWithImages = searchResponse.results.map(item => ({
       ...item,
       poster_url: tmdbService.getImageUrl(item.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(item.backdrop_path),
@@ -24,7 +24,10 @@ const searchMulti = async (req, res) => {
 
     res.json({
       success: true,
-      data: resultsWithImages
+      data: resultsWithImages,
+      total_pages: searchResponse.total_pages,
+      page: searchResponse.page,
+      total_results: searchResponse.total_results
     });
   } catch (error) {
     res.status(500).json({

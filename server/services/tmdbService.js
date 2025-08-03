@@ -192,7 +192,7 @@ class TMDBService {
       const response = await this.api.get('/search/multi', {
         params: { query, page }
       });
-      return response.data.results;
+      return response.data; // Return the full response object with results and total_pages
     } catch (error) {
       console.error('Error searching:', error);
       throw error;

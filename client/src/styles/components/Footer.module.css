@@ -55,4 +55,7 @@
     .col {
         gap: 8px;
     }
+    .logoFooter {
+        width: 100px;
+    }
 }

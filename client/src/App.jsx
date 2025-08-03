@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import MovieDetail from './pages/MovieDetail'
 import Movies from './pages/Movies'
 import TVShows from './pages/TVShows'
+import SearchResults from './pages/SearchResults'
 import './App.css'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/tv-shows" element={<TVShows />} />
+            <Route path="/search" element={<SearchResults />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
           </Routes>
         </Layout>

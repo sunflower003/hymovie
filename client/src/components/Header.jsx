@@ -6,6 +6,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -40,6 +41,19 @@ const Header = () => {
     closeMenu();
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(e);
+    }
+  };
+
   return (
     <header className={styles.header}>
         <div>
@@ -71,8 +85,19 @@ const Header = () => {
         </ul>
         
         <div className={styles.search}>
-            <input type="text" placeholder="Search..." className={styles.searchInput} />
-            <i className="ri-search-line"></i>
+            <input 
+              type="text" 
+              placeholder="Search movies..." 
+              className={styles.searchInput}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={handleSearchKeyPress}
+            />
+            <i 
+              className="ri-search-line" 
+              onClick={handleSearch}
+              style={{ cursor: 'pointer' }}
+            ></i>
         </div>
         
         {/* Category Dropdown */}
