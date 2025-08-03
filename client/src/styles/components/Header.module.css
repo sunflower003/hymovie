@@ -213,8 +213,9 @@ aside i {
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
-        gap: 15px;
-        padding: 20px 15px;
+        gap: 12px;
+        padding: 15px 10px;
+        overflow-x: hidden;
     }
     
     .header > div:first-child {
@@ -232,18 +233,22 @@ aside i {
         display: flex;
         width: 100%;
         border: 2px solid white;
-        padding: 12px 20px;
+        padding: 10px 15px;
         border-radius: 25px;
         order: 2;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .search input {
         flex: 1;
         font-size: 16px;
+        min-width: 0; /* Allow input to shrink */
     }
     
     .logo {
-        width: 100px;
+        width: 90px;
+        max-width: 40%;
     }
     
     .hamburgerMenu {
@@ -252,5 +257,24 @@ aside i {
     
     .categoryDropdown {
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 12px 8px;
+        gap: 10px;
+    }
+    
+    .search {
+        padding: 8px 12px;
+    }
+    
+    .logo {
+        width: 80px;
+    }
+    
+    .search input {
+        font-size: 14px;
     }
 }

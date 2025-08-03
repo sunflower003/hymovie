@@ -1,6 +1,7 @@
 .trending {
     padding: 25px;
     position: relative;
+    overflow: hidden; /* Prevent horizontal scroll */
 }
 
 .title {
@@ -12,11 +13,14 @@
 .swiperContainer {
     position: relative;
     margin-top: 20px;
+    overflow: hidden; /* Prevent horizontal scroll */
 }
 
 .swiper {
     overflow: visible;
     padding: 0 50px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .movieCard {
@@ -132,8 +136,11 @@
 
 .mobileGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .latestMovies {
@@ -171,80 +178,46 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .trending {
-    padding: 20px 15px;
+    padding: 15px 5px;
+    overflow: hidden;
   }
 
   .title {
-    font-size: 24px;
+    font-size: 22px;
+    margin-bottom: 15px;
+    padding: 0 10px;
   }
 
   .swiperContainer {
     position: static;
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
   }
 
+  .mobileGrid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 0 10px;
+  }
+
+  /* Force hide Swiper on mobile */
   .swiper {
-    overflow: visible;
-    padding: 0;
-  }
-
-  .swiper .swiper-wrapper {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    transform: none !important;
-    width: 100% !important;
-  }
-
-  .swiper .swiper-slide {
-    width: auto !important;
-    margin-right: 0 !important;
-  }
-
-  .playButton {
-    width: 45px;
-    height: 45px;
-    font-size: 18px;
-  }
-
-  .movieTitle {
-    font-size: 14px;
-  }
-
-  .movieDetails {
-    font-size: 12px;
+    display: none !important;
   }
 
   .navButton {
     display: none;
   }
 
-  .moviePoster {
-    aspect-ratio: 2/3;
-    object-fit: cover;
+  .movieTitle {
+    font-size: 13px;
+    line-height: 1.2;
+    width: 100%;
   }
 
-  .latestMovies {
-    padding: 20px 15px;
-  }
-
-  .latestGrid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .trending {
-    padding: 15px 10px;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-
-  .swiper .swiper-wrapper {
-    gap: 12px;
+  .movieDetails {
+    font-size: 11px;
   }
 
   .playButton {
@@ -253,12 +226,10 @@
     font-size: 16px;
   }
 
-  .movieTitle {
-    font-size: 13px;
-  }
-
-  .movieDetails {
-    font-size: 11px;
+  .moviePoster {
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    width: 100%;
   }
 
   .latestMovies {
@@ -266,8 +237,74 @@
   }
 
   .latestGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-rows: repeat(auto, 1fr);
     gap: 12px;
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trending {
+    padding: 12px 3px;
+    overflow: hidden;
+  }
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 12px;
+    padding: 0 8px;
+  }
+
+  .swiperContainer {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .mobileGrid {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  /* Force hide Swiper on mobile */
+  .swiper {
+    display: none !important;
+  }
+
+  .movieTitle {
+    font-size: 12px;
+    line-height: 1.1;
+  }
+
+  .movieDetails {
+    font-size: 10px;
+  }
+
+  .playButton {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .latestMovies {
+    padding: 12px 8px;
+  }
+
+  .latestGrid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 0 -8px;
+    padding: 0 8px;
+  }
+
+  .movieCard {
+    min-height: auto;
+  }
+
+  .movieInfo {
+    padding: 8px;
   }
 }
 
