@@ -4,6 +4,7 @@ import styles from '../styles/pages/MovieDetail.module.css';
 import { getMovieDetails, getTVShowDetails, getImageUrl } from '../services/tmdbApi';
 import ErrorBoundary from '../components/ErrorBoundary';
 import VideoPlayer from '../components/VideoPlayer';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { getVideoEmbedUrl } from '../utils/videoUtils';
 
 const MovieDetail = () => {
@@ -81,7 +82,9 @@ const MovieDetail = () => {
   if (loading) {
     return (
       <div className={styles.movieDetail}>
-        <div className={styles.loading}>Loading...</div>
+        <div className={styles.loading}>
+          <LoadingSpinner size="large" />
+        </div>
       </div>
     );
   }

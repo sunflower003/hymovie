@@ -28,7 +28,11 @@ const PORT = process.env.PORT || 5000;
 // CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://hymovie.vercel.app', 'https://your-frontend-domain.vercel.app'] // Add your actual frontend domains
+    ? [
+        'https://hymovie.vercel.app',
+        'https://hymovie-frontend.vercel.app',
+        process.env.FRONTEND_URL
+      ].filter(Boolean) // Remove undefined values
     : ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173'],
   credentials: true,
   optionsSuccessStatus: 200
@@ -53,6 +57,16 @@ app.get('/', (req, res) => {
     message: 'Hymovie API Server is running!',
     version: '1.0.0',
     environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString(),
+    status: 'healthy',
+    uptime: process.uptime()
+  });
+});
+
+// Fast health check for wake-up detection
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok',
     timestamp: new Date().toISOString()
   });
 });

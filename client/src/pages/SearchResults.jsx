@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { searchMulti, getImageUrl } from '../services/tmdbApi';
+import LoadingSpinner from '../components/LoadingSpinner';
 import styles from '../styles/components/HomeMovieList.module.css'; // Sử dụng CSS từ HomeMovieList
 
 const SearchResults = () => {
@@ -206,8 +207,7 @@ const SearchResults = () => {
               >
                 {loading ? (
                   <>
-                    <div style={{ width: '20px', height: '20px', border: '2px solid #333', borderTop: '2px solid #e50914', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                    Loading...
+                    <LoadingSpinner size="small" />
                   </>
                 ) : (
                   'Load More'

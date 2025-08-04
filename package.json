@@ -12,6 +12,8 @@
     "build:prod": "cd client && npm run build:prod",
     "start": "cd server && npm start",
     "deploy:vercel": "cd client && npm run deploy:vercel",
+    "deploy:full": "node deploy.js",
+    "keep-alive": "node keep-alive.js",
     "setup:dev": "npm run install:all && npm run setup:env",
     "setup:env": "node scripts/setup-env.js"
   },

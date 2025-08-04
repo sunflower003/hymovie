@@ -19,5 +19,9 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "VITE_API_URL": "https://hymovie.onrender.com/api",
+    "VITE_VIDSRC_BASE_URL": "https://vidsrc.to/embed"
+  }
 }

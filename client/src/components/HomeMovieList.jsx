@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import styles from '../styles/components/HomeMovieList.module.css';
+import LoadingSpinner from './LoadingSpinner';
 import { getTrending, getLatestMovies, getLatestTVShows, getImageUrl } from '../services/tmdbApi';
 
 const HomeMovieList = () => {
@@ -74,7 +75,11 @@ const HomeMovieList = () => {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        <LoadingSpinner size="large" />
+      </div>
+    );
   }
   return (
     <div>
