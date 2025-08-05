@@ -4,10 +4,10 @@ const tmdbService = require('../services/tmdbService');
 const getPopularMovies = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const movies = await tmdbService.getPopularMovies(page);
+    const response = await tmdbService.getPopularMovies(page);
     
     // Add image URLs to each movie
-    const moviesWithImages = movies.map(movie => ({
+    const moviesWithImages = response.results.map(movie => ({
       ...movie,
       poster_url: tmdbService.getImageUrl(movie.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(movie.backdrop_path),
@@ -16,7 +16,10 @@ const getPopularMovies = async (req, res) => {
 
     res.json({
       success: true,
-      data: moviesWithImages
+      data: moviesWithImages,
+      page: response.page,
+      total_pages: response.total_pages,
+      total_results: response.total_results
     });
   } catch (error) {
     res.status(500).json({
@@ -31,10 +34,10 @@ const getPopularMovies = async (req, res) => {
 const getLatestMovies = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const movies = await tmdbService.getLatestMovies(page);
+    const response = await tmdbService.getLatestMovies(page);
     
     // Add image URLs to each movie
-    const moviesWithImages = movies.map(movie => ({
+    const moviesWithImages = response.results.map(movie => ({
       ...movie,
       poster_url: tmdbService.getImageUrl(movie.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(movie.backdrop_path),
@@ -43,7 +46,10 @@ const getLatestMovies = async (req, res) => {
 
     res.json({
       success: true,
-      data: moviesWithImages
+      data: moviesWithImages,
+      page: response.page,
+      total_pages: response.total_pages,
+      total_results: response.total_results
     });
   } catch (error) {
     res.status(500).json({

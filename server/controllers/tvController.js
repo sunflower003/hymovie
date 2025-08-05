@@ -4,10 +4,10 @@ const tmdbService = require('../services/tmdbService');
 const getPopularTVShows = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const tvShows = await tmdbService.getPopularTVShows(page);
+    const response = await tmdbService.getPopularTVShows(page);
     
     // Add image URLs to each TV show
-    const tvShowsWithImages = tvShows.map(show => ({
+    const tvShowsWithImages = response.results.map(show => ({
       ...show,
       poster_url: tmdbService.getImageUrl(show.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(show.backdrop_path),
@@ -16,7 +16,10 @@ const getPopularTVShows = async (req, res) => {
 
     res.json({
       success: true,
-      data: tvShowsWithImages
+      data: tvShowsWithImages,
+      page: response.page,
+      total_pages: response.total_pages,
+      total_results: response.total_results
     });
   } catch (error) {
     res.status(500).json({
@@ -31,10 +34,10 @@ const getPopularTVShows = async (req, res) => {
 const getLatestTVShows = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const tvShows = await tmdbService.getLatestTVShows(page);
+    const response = await tmdbService.getLatestTVShows(page);
     
     // Add image URLs to each TV show
-    const tvShowsWithImages = tvShows.map(show => ({
+    const tvShowsWithImages = response.results.map(show => ({
       ...show,
       poster_url: tmdbService.getImageUrl(show.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(show.backdrop_path),
@@ -43,7 +46,10 @@ const getLatestTVShows = async (req, res) => {
 
     res.json({
       success: true,
-      data: tvShowsWithImages
+      data: tvShowsWithImages,
+      page: response.page,
+      total_pages: response.total_pages,
+      total_results: response.total_results
     });
   } catch (error) {
     res.status(500).json({
@@ -58,10 +64,10 @@ const getLatestTVShows = async (req, res) => {
 const getAiringTodayTVShows = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const tvShows = await tmdbService.getAiringTodayTVShows(page);
+    const response = await tmdbService.getAiringTodayTVShows(page);
     
     // Add image URLs to each TV show
-    const tvShowsWithImages = tvShows.map(show => ({
+    const tvShowsWithImages = response.results.map(show => ({
       ...show,
       poster_url: tmdbService.getImageUrl(show.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(show.backdrop_path),
@@ -70,7 +76,10 @@ const getAiringTodayTVShows = async (req, res) => {
 
     res.json({
       success: true,
-      data: tvShowsWithImages
+      data: tvShowsWithImages,
+      page: response.page,
+      total_pages: response.total_pages,
+      total_results: response.total_results
     });
   } catch (error) {
     res.status(500).json({
@@ -85,10 +94,10 @@ const getAiringTodayTVShows = async (req, res) => {
 const getTopRatedTVShows = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const tvShows = await tmdbService.getTopRatedTVShows(page);
+    const response = await tmdbService.getTopRatedTVShows(page);
     
     // Add image URLs to each TV show
-    const tvShowsWithImages = tvShows.map(show => ({
+    const tvShowsWithImages = response.results.map(show => ({
       ...show,
       poster_url: tmdbService.getImageUrl(show.poster_path),
       backdrop_url: tmdbService.getBackdropUrl(show.backdrop_path),
@@ -97,7 +106,10 @@ const getTopRatedTVShows = async (req, res) => {
 
     res.json({
       success: true,
-      data: tvShowsWithImages
+      data: tvShowsWithImages,
+      page: response.page,
+      total_pages: response.total_pages,
+      total_results: response.total_results
     });
   } catch (error) {
     res.status(500).json({

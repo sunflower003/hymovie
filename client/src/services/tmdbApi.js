@@ -36,10 +36,10 @@ export const getPopularMovies = async (page = 1) => {
     const response = await api.get('/movies/popular', {
       params: { page }
     });
-    return response.data.data || [];
+    return response.data;
   } catch (error) {
     console.error('Error fetching popular movies:', error);
-    return [];
+    return { data: [], page: 1, total_pages: 0, total_results: 0 };
   }
 };
 
@@ -49,10 +49,10 @@ export const getLatestMovies = async (page = 1) => {
     const response = await api.get('/movies/latest', {
       params: { page }
     });
-    return response.data.data || [];
+    return response.data;
   } catch (error) {
     console.error('Error fetching latest movies:', error);
-    return [];
+    return { data: [], page: 1, total_pages: 0, total_results: 0 };
   }
 };
 
@@ -62,10 +62,10 @@ export const getPopularTVShows = async (page = 1) => {
     const response = await api.get('/tv/popular', {
       params: { page }
     });
-    return response.data.data || [];
+    return response.data;
   } catch (error) {
     console.error('Error fetching popular TV shows:', error);
-    return [];
+    return { data: [], page: 1, total_pages: 0, total_results: 0 };
   }
 };
 
@@ -75,10 +75,10 @@ export const getLatestTVShows = async (page = 1) => {
     const response = await api.get('/tv/latest', {
       params: { page }
     });
-    return response.data.data || [];
+    return response.data;
   } catch (error) {
     console.error('Error fetching latest TV shows:', error);
-    return [];
+    return { data: [], page: 1, total_pages: 0, total_results: 0 };
   }
 };
 
@@ -88,10 +88,10 @@ export const getAiringTodayTVShows = async (page = 1) => {
     const response = await api.get('/tv/airing-today', {
       params: { page }
     });
-    return response.data.data || [];
+    return response.data;
   } catch (error) {
     console.error('Error fetching airing today TV shows:', error);
-    return [];
+    return { data: [], page: 1, total_pages: 0, total_results: 0 };
   }
 };
 
@@ -101,10 +101,10 @@ export const getTopRatedTVShows = async (page = 1) => {
     const response = await api.get('/tv/top-rated', {
       params: { page }
     });
-    return response.data.data || [];
+    return response.data;
   } catch (error) {
     console.error('Error fetching top rated TV shows:', error);
-    return [];
+    return { data: [], page: 1, total_pages: 0, total_results: 0 };
   }
 };
 

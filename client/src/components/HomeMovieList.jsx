@@ -34,13 +34,13 @@ const HomeMovieList = () => {
         setLoading(true);
         const [trending, latest, tvShows] = await Promise.all([
           getTrending('all', 'week'),
-          getLatestMovies(),
-          getLatestTVShows()
+          getLatestMovies(1),
+          getLatestTVShows(1)
         ]);
         
         setTrendingMovies(trending.slice(0, 20));
-        setLatestMovies(latest.slice(0, 12));
-        setLatestTVShows(tvShows.slice(0, 12));
+        setLatestMovies((latest.data || latest).slice(0, 12));
+        setLatestTVShows((tvShows.data || tvShows).slice(0, 12));
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {

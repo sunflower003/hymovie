@@ -1,7 +1,6 @@
 .tvshows {
   padding: 25px;
   margin-top: 100px;
-  background-color: var(--primary);
   min-height: 100vh;
 }
 
@@ -42,7 +41,7 @@
   border-color: #e50914;
 }
 
-.content h2 {
+.content > h2 {
   color: white;
   font-size: 24px;
   font-weight: 400;

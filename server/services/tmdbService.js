@@ -49,7 +49,7 @@ class TMDBService {
       const response = await this.api.get('/movie/popular', {
         params: { page }
       });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.error('Error fetching popular movies:', error);
       throw error;
@@ -73,7 +73,7 @@ class TMDBService {
           'vote_count.gte': 10 // At least 10 votes for better quality
         }
       });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.error('Error fetching latest movies:', error);
       // Fallback to now_playing if discover fails
@@ -81,7 +81,7 @@ class TMDBService {
         const fallbackResponse = await this.api.get('/movie/now_playing', {
           params: { page }
         });
-        return fallbackResponse.data.results;
+        return fallbackResponse.data;
       } catch (fallbackError) {
         console.error('Fallback error:', fallbackError);
         throw error;
@@ -94,7 +94,7 @@ class TMDBService {
       const response = await this.api.get('/tv/popular', {
         params: { page }
       });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.error('Error fetching popular TV shows:', error);
       throw error;
@@ -119,7 +119,7 @@ class TMDBService {
           'vote_count.gte': 10 // At least 10 votes for better quality
         }
       });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.error('Error fetching latest TV shows:', error);
       // Fallback to on_the_air if discover fails
@@ -127,7 +127,7 @@ class TMDBService {
         const fallbackResponse = await this.api.get('/tv/on_the_air', {
           params: { page }
         });
-        return fallbackResponse.data.results;
+        return fallbackResponse.data;
       } catch (fallbackError) {
         console.error('Fallback error:', fallbackError);
         throw error;
@@ -140,7 +140,7 @@ class TMDBService {
       const response = await this.api.get('/tv/airing_today', {
         params: { page }
       });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.error('Error fetching airing today TV shows:', error);
       throw error;
@@ -152,7 +152,7 @@ class TMDBService {
       const response = await this.api.get('/tv/top_rated', {
         params: { page }
       });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.error('Error fetching top rated TV shows:', error);
       throw error;
