@@ -316,10 +316,7 @@ const TVShows = () => {
                   disabled={loadingMore}
                 >
                   {loadingMore ? (
-                    <>
-                      <LoadingSpinner size="small" />
-                      Loading...
-                    </>
+                    <LoadingSpinner size="small" />
                   ) : (
                     'Load More'
                   )}
