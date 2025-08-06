@@ -26,7 +26,7 @@ const Footer = () => {
             </div>
         </div>
       </div>
-      <p className={styles.copyright}>© 2025 Hystudio. Hymovie® is a registered trademark. All rights reserved.</p>
+      <p className={styles.copyright}>© 2026 Hystudio. Hymovie® is a registered trademark. All rights reserved.</p>
     </footer>
   );
 };
